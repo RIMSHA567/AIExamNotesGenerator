@@ -1,31 +1,78 @@
-// 1. express import kar rahe hain taake backend server create kar saken
 import express from "express";
+// Express import kar rahe hain, jo Node.js me server banane ka framework hai
 
-// 2. dotenv import kar rahe hain taake .env file ki variables use ho saken
+import cors from "cors";
+// CORS import kar rahe hain, taake frontend (React) aur backend (Node) alag ports par communicate kar saken
+
+import cookieParser from "cookie-parser";
+// Cookies read aur write karne ke liye middleware
+
 import dotenv from "dotenv";
+// .env file se environment variables read karne ke liye
 
-// 3. database connect karne wali file import kar rahe hain
 import connectDb from "./utils/connectDb.js";
+// MongoDB connect karne ka function import kar rahe hain
 
-// 4. dotenv ko activate kar rahe hain taake .env file load ho jaye
+import authRouter from "./routes/auth.route.js";
+// Authentication related routes import kar rahe hain (Google login etc.)
+
+import userRouter from "./routes/user.route.js";
+// User related routes import kar rahe hain (current user get karna etc.)
+
 dotenv.config();
+// .env file load kar rahe hain, jahan secret keys aur URLs stored hoti hain
 
-// 5. express app create kar rahe hain (yehi hamara backend server hai)
 const app = express();
+// Express app create kar rahe hain, jo server ko control karega
 
-// 6. PORT environment variable se le rahe hain, agar na mile to 5000 use hoga
-const PORT = process.env.PORT || 5000;
+// use hr anay wali request pr implement hota hy
+// CORS configuration (frontend and backend ko connnect kiya)
+app.use(
+  cors({
+    origin: "http://localhost:5173", // yahan sy anay wali request sunnni hy
+    // Ye frontend ka address hai, sirf ye allow hoga backend se connect
+    credentials: true,
+    // Cookies allow karne ke liye
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    // Ye HTTP methods allowed hain
+  }),
+);
 
-// 7. basic test route bana rahe hain (browser me server check karne ke liye)
+// JSON parse
+app.use(express.json());
+// Body me jo JSON data aayega, usko automatically parse kar dega (mtlb samj kay redable json form my cnvrt karna)
+
+// cookies read karne ke liye(mtlb jb bi browser sy request ay gi sath cookie bi ay gi ,is sy read kar sakya gay)
+app.use(cookieParser());
+// Browser se aane wali cookies ko read karne ke liye
+
+// test route
 app.get("/", (req, res) => {
-  // 8. client ko JSON response bhej rahe hain
-  res.json({ message: "ExamNotes AI Backend Running" });
+  // Ye route check karne ke liye hai ke server chal raha hai ya nahi
+  res.json({
+    message: "ExamNotes AI Backend Running",
+  });
 });
 
-// 9. server ko given PORT par run kar rahe hain
+//PEHLAY ROUTE PY,THEN WAHAN SY CONTROLLER PY
+// routes
+
+// 4*
+app.use("/api/auth", authRouter);
+// "/api/auth" ke requests ke liye authRouter use hoga (Google login)
+app.use("/api/user", userRouter);
+// "/api/user" ke requests ke liye userRouter use hoga (current user etc.)
+
+// server port
+const PORT = process.env.PORT || 5000;
+// Server kis port par chalega, agar .env me na ho to 5000 default
+
+// server start
 app.listen(PORT, () => {
-  // 10. console me message show hoga jab server successfully start ho jaye
   console.log(`Server running on port ${PORT}`);
-  // 11. MongoDB database ko connect kar rahe hain
+  // Console me message aayega ke server chal raha hai
+
+  // database connect
   connectDb();
+  // Server start hote hi MongoDB connect karenge
 });

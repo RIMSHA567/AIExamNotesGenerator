@@ -23,3 +23,39 @@ export const getCurrentUser = async (dispatch) => {
     console.log(error.response?.data || error.message);
   }
 };
+
+// ============================
+// Generate notes function (AI se)
+// payload = data object jo API ko bheja jata hai.
+
+// like this :
+// const payload = {
+//   topic: "Operating System",
+//   classLevel: "BSCS",
+//   examType: "Final",
+//   revisionMode: true,
+//   includeDiagram: true,
+//   includeChart: false
+// };
+export const generateNotes = async (payload) => {
+  try {
+    // Server me POST request bhej rahe hain
+    // payload me topic, classlevel, examType, etc. hoga
+    const result = await axios.post(
+      serverUrl + "/api/notes/generate-notes",
+      payload,
+      {
+        withCredentials: true, // cookie ya token ke sath request
+      },
+    );
+    console.log(result);
+    // Console me response dekh sakte hain
+    console.log(result.data);
+
+    // Function ke caller ko data return kar rahe hain
+    return result.data;
+  } catch (error) {
+    // Agar request fail ho jaye to error print karein
+    console.log(error);
+  }
+};

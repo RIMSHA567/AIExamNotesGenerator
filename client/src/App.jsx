@@ -4,6 +4,8 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { getCurrentUser } from "./services/api.js";
 import Home from "./pages/Home.jsx";
 import Auth from "./pages/Auth.jsx";
+import NotesForm from "./pages/NotesForm.jsx";
+import NotesResult from "./pages/NotesResult.jsx";
 
 export const serverUrl = "http://localhost:8000";
 
@@ -12,7 +14,7 @@ function App() {
 
   // yahan py hm store sy value read kar rahy haen use selctor sy
   //yahan hm user ka pora data milay ga (jo kay login howa tab hi milay ga )
-  const userData = useSelector((state) => state.user.userData);
+  let userData = useSelector((state) => state.user.userData);
 
   //   Agar tum useEffect me getCurrentUser() call na karo:
 
@@ -44,6 +46,14 @@ function App() {
       <Route
         path="/auth"
         element={userData ? <Navigate to="/" replace /> : <Auth />}
+      />
+      <Route
+        path="/notes"
+        element={userData ? <NotesForm /> : <Navigate to="/auth" replace />}
+      />
+      <Route
+        path="/notes-result"
+        element={userData ? <NotesResult /> : <Navigate to="/auth" replace />}
       />
     </Routes>
   );

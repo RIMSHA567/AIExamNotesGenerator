@@ -1,7 +1,9 @@
 import { motion } from "framer-motion";
 import { FaPlayCircle } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const HeroSection = () => {
+  const navigate = useNavigate();
   return (
     <section className="w-full bg-[#F8F9FC] pt-28 px-6">
       <div className="max-w-6xl mx-auto text-center">
@@ -42,6 +44,7 @@ const HeroSection = () => {
           <motion.button
             whileHover={{ scale: 1.05 }}
             className="bg-linear-to-r from-[#6366F1] to-[#8B5CF6] text-white px-8 py-3 rounded-full font-medium shadow-lg"
+            onClick={() => navigate("/notes")}
           >
             Get Started
           </motion.button>

@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 import MermaidSetup from "../components/MermaidSetup";
 import RechartSetup from "../components/RechartSetUp";
+import { downloadPdf } from "../services/api.js";
 
 import {
   FaBookOpen,
@@ -119,7 +120,7 @@ const NotesResult = () => {
 
               {/* Download */}
               <button
-                // onClick={downloadNotes} // implement your download function
+                onClick={() => downloadPdf(result)}
                 className="flex items-center gap-2 bg-indigo-900 px-6 py-3 rounded-xl font-semibold shadow hover:bg-indigo-800 hover:scale-105 transition"
               >
                 Download Notes

@@ -20,6 +20,7 @@ import userRouter from "./routes/user.route.js";
 // User related routes import kar rahe hain (current user get karna etc.)
 
 import notesRouter from "./routes/notes.route.js";
+import pdfRouter from "./routes/pdf.route.js";
 
 dotenv.config();
 // .env file load kar rahe hain, jahan secret keys aur URLs stored hoti hain
@@ -65,6 +66,7 @@ app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
 // "/api/user" ke requests ke liye userRouter use hoga (current user etc.)
 app.use("/api/notes", notesRouter);
+app.use("/api/pdf", pdfRouter);
 
 // server port
 const PORT = process.env.PORT || 5000;

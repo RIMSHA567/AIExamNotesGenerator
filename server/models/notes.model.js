@@ -25,7 +25,7 @@ const notesSchema = new mongoose.Schema(
     },
 
     // Class level (example: class 10, 11 etc)
-    classlevel: String,
+    classLevel: String,
 
     // Exam type (example: midterm, final)
     examType: String,

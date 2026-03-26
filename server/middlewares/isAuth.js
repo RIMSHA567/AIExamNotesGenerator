@@ -11,6 +11,8 @@ const isAuth = async (req, res, next) => {
     if (!verifyToken) return res.status(400).json({ message: "Invalid token" });
 
     req.userId = verifyToken.userId; // User id attach kar dete hain request me
+    console.log("is auth my userid page py 1st chl ra hoon");
+
     // 18*
     next(); // Controller execute hone de
   } catch (error) {

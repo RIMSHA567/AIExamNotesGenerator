@@ -21,32 +21,26 @@ const markDownComponent = {
       {children}
     </h1>
   ),
-
   h2: ({ children }) => (
     <h2 className="text-2xl font-bold text-indigo-700 mt-8 mb-4">{children}</h2>
   ),
-
   h3: ({ children }) => (
     <h3 className="text-xl font-semibold text-gray-800 mt-6 mb-3">
       {children}
     </h3>
   ),
-
   p: ({ children }) => (
     <p className="text-gray-700 leading-relaxed mb-5 text-[17px]">{children}</p>
   ),
-
   ul: ({ children }) => (
     <ul className="list-disc ml-6 space-y-2 text-gray-700">{children}</ul>
   ),
-
   li: ({ children }) => <li className="marker:text-indigo-500">{children}</li>,
 };
 
-const NotesResult = () => {
+const NotesResult = (props) => {
   const location = useLocation();
-  const result = location.state?.notes;
-  const [showRevision, setShowRevision] = useState(false);
+  const result = props.notes || location.state?.notes;
 
   if (!result)
     return (
@@ -55,7 +49,10 @@ const NotesResult = () => {
       </div>
     );
 
-  const data = result.data;
+  // ================= NORMALIZE DATA =================
+  const data = result.content || result.data || result;
+
+  const [showRevision, setShowRevision] = useState(false);
 
   const getSubTopicClass = (star) => {
     if (star === "★")
@@ -78,7 +75,7 @@ const NotesResult = () => {
             {/* Topic + Info */}
             <div className="space-y-4">
               <p className="text-sm tracking-widest uppercase text-indigo-200 font-semibold">
-                AI Generated Study Notes
+                AIExamsNotesGenerator
               </p>
 
               {/* TOPIC */}
@@ -130,7 +127,7 @@ const NotesResult = () => {
         </header>
 
         {/* DETAILED NOTES */}
-        {!showRevision && data.notes && (
+        {!showRevision && data && (
           <section className="bg-white p-10 rounded-3xl shadow-lg border border-gray-200">
             <div className="flex items-center gap-3 mb-8">
               <FaBookOpen className="text-indigo-600 text-2xl" />

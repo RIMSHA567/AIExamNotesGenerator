@@ -6,6 +6,7 @@ import Home from "./pages/Home.jsx";
 import Auth from "./pages/Auth.jsx";
 import NotesForm from "./pages/NotesForm.jsx";
 import NotesResult from "./pages/NotesResult.jsx";
+import History from "./pages/History.jsx";
 
 export const serverUrl = "http://localhost:8000";
 
@@ -54,6 +55,10 @@ function App() {
       <Route
         path="/notes-result"
         element={userData ? <NotesResult /> : <Navigate to="/auth" replace />}
+      />
+      <Route
+        path="/history"
+        element={userData ? <History /> : <Navigate to="/auth" replace />}
       />
     </Routes>
   );

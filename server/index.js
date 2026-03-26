@@ -19,7 +19,8 @@ import authRouter from "./routes/auth.route.js";
 import userRouter from "./routes/user.route.js";
 // User related routes import kar rahe hain (current user get karna etc.)
 
-import notesRouter from "./routes/notes.route.js";
+import notesRouter from "./routes/generate.route.js";
+
 import pdfRouter from "./routes/pdf.route.js";
 
 dotenv.config();
